@@ -17,7 +17,7 @@ class Customer
       Logger.log(customer.shop.current_time, "#{customer.name} leaves unfulfilled")
     end
 
-    after_transition to: :left_dissapointed do |customer, _transition|
+    after_transition to: :left_disapointed do |customer, _transition|
       Logger.log(customer.shop.current_time, "#{customer.name} leaves disappointed")
     end
 
@@ -38,7 +38,7 @@ class Customer
     end
 
     event :leave_disapointed! do
-      transition waiting: :left_disapointed
+      transition new: :left_disapointed
     end
 
     event :leave_frustrated! do

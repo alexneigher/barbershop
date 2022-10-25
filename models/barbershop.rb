@@ -58,7 +58,21 @@ class Barbershop
     @current_time = current_time
     @waiting_room = waiting_room # array of Persons
     @active_barbers = FIRST_SHIFT  # array of Persons
+    @customer_count = 1
     super()
+  end
+
+  def introduce_new_customer
+    customer = Customer.new("Customer-#{@customer_count}", self)
+    case state
+      when "open"
+      maybe_add_to_waiting_room(customer)
+      @customer_count += 1
+
+      when "closing", "closed"
+        customer.leave_disapointed!
+        @customer_count += 1
+    end
   end
 
   def check_open_closed_status
@@ -82,8 +96,8 @@ class Barbershop
 
     #if there are available barbers assign a customer to one
     if (barber = @active_barbers.find{ |b| b.available? })
-      # grab the "last" customer in the queue since they've been waiting longest
-      customer = waiting_room.customers.last
+      # grab the customer in the queue that has been waiting longest
+      customer = waiting_room.customers.first
 
       barber.engage_with(customer, @current_time)
       waiting_room.pop(customer)
