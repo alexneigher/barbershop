@@ -77,10 +77,25 @@ class Barbershop
       end
       self.active_barbers = FIRST_SHIFT
 
+    # this is risky, if we miss this timestamp, the second shift never clocks in
+    # clock in second shift
+    elsif @current_time == SHIFT_CHANGE
+      SECOND_SHIFT.each do |barber|
+        barber.shop = self
+        barber.clock_in!
+      end
+      self.active_barbers = [self.active_barbers + SECOND_SHIFT].flatten
+
     # after the switchover time
     # clock people out as people become available
-    elsif @current_time >= SHIFT_CHANGE
-      available_barbers_from_first_shift.each do |b|
+    elsif @current_time > SHIFT_CHANGE && @current_time <= CLOSING_TIME
+      available_barbers_from_shift(FIRST_SHIFT).each do |b|
+        b.clock_out!
+        self.active_barbers = [self.active_barbers - [b]].flatten
+      end
+    # after closing time, clock people out as they finish work
+    elsif @current_time > CLOSING_TIME
+      available_barbers_from_shift(SECOND_SHIFT).each do |b|
         b.clock_out!
         self.active_barbers = [self.active_barbers - [b]].flatten
       end
@@ -156,8 +171,8 @@ class Barbershop
     @current_time = new_time
   end
 
-  def available_barbers_from_first_shift
-    [@active_barbers & FIRST_SHIFT].flatten.select{|b| b.available? }
+  def available_barbers_from_shift(shift)
+    [@active_barbers & shift].flatten.select{|b| b.available? }
   end
 
   # if we have room maybe
