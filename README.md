@@ -25,6 +25,7 @@ A simulation of barbershop traffic
 
 ### Test Coverage
 You can run the entire test suite by running `rspec spec -fd`, or target specific subdirectories directly (i.e. `rspec spec/models/`)
+
 ------------------------
 
 Example Output:
