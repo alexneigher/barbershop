@@ -24,7 +24,7 @@ A simulation of barbershop traffic
 5. Execute the program by running `ruby simulation.rb`
 
 ### Test Coverage
-You can run the entire test suite by running `rspec spec`, or target specific subdirectories directly (i.e. `rspec spec/models/`)
+You can run the entire test suite by running `rspec spec -fd`, or target specific subdirectories directly (i.e. `rspec spec/models/`)
 ------------------------
 
 Example Output:
