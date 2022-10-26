@@ -6,25 +6,22 @@ A simulation of barbershop traffic
 ### Install dependencies
 > These install instructions assume youre running this program on a mac
 
-1. Install **Homebrew** ([Link](https://brew.sh/))
-    - `/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"`
-
-2. Install **RVM** ([Link](https://rvm.io/rvm/install)) (Or use your favorite ruby version manager)
+1. Install **RVM** ([Link](https://rvm.io/rvm/install)) (Or use your favorite ruby version manager)
     - `\curl -sSL https://get.rvm.io | bash`
 
-3. Install **Ruby** ([Link](http://railsapps.github.io/installrubyonrails-mac.html))
+2. Install **Ruby** ([Link](http://railsapps.github.io/installrubyonrails-mac.html))
       - `rvm install ruby-2.7.4` (or whatever version number is)
     - Set your system to use the same version of Ruby as the app (the OS may already have an older or newer version installed):
       - `rvm --default use 2.7.4`
     - Run `rvm list` to confirm that the current and default Ruby version is set to the app's version.
 
-4. Install **Bundler** ([Link](https://bundler.io/doc/troubleshooting.html))
+3. Install **Bundler** ([Link](https://bundler.io/doc/troubleshooting.html))
   - `gem install bundler`
   This will install the package manager for the gems included in this project (see `Gemfile`)
 
-5. Run `bundle install` from the root of this directory to install the project specific dependencies
+4. Run `bundle install` from the root of this directory to install the project specific dependencies
 
-6. Execute the program by running `ruby simulation.rb`
+5. Execute the program by running `ruby simulation.rb`
 
 ------------------------
 
