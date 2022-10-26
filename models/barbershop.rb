@@ -67,8 +67,11 @@ class Barbershop
     self.should_close?
   end
 
+  # TODO REFACTOR THIS
+  # This needs to be decoupled into a ShiftChangerService or something else to decouple it.
   # if no shift if active, clock in 1st shift
   # if the shift change time has elapsed, iterate through list and as they become free, swap them for second shift
+  # if the time is after closing, try to clock out the remaining working people if they're still on the clock
   def check_shift_change
     if @current_time >= OPENING_TIME && @current_time < SHIFT_CHANGE && self.active_barbers.empty?
       FIRST_SHIFT.each do |barber|
@@ -77,7 +80,7 @@ class Barbershop
       end
       self.active_barbers = FIRST_SHIFT
 
-    # this is risky, if we miss this timestamp, the second shift never clocks in
+    # this is risky, if we miss this exact timestamp, the second shift never clocks in
     # clock in second shift
     elsif @current_time == SHIFT_CHANGE
       SECOND_SHIFT.each do |barber|

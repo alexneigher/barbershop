@@ -28,6 +28,7 @@ PLATFORMS
 DEPENDENCIES
   pry
   rspec
+  rspec-expectations
   state_machines
 
 BUNDLED WITH

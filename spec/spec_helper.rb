@@ -1,1 +1,7 @@
-require 'spec_helper'
+require 'rspec'
+require_relative '../models/customer'
+require_relative '../models/barber'
+require_relative '../models/barbershop'
+require_relative '../models/waiting_room'
+require_relative '../utilities/logger'
+require_relative '../utilities/time_converter'
