@@ -7,7 +7,7 @@ Dir["models/*.rb"].each {|file| require_relative file }
 TOTAL_SECONDS = 86399.freeze # number of seconds in a 24 hour period
 ##
 
-## "main variables
+## "main" variables
 elapsed_seconds = Barbershop::OPENING_TIME - 300 # start the simulation 5 minutes before open
 shop = Barbershop.new("Family Cuts")
 ##
@@ -18,7 +18,7 @@ while elapsed_seconds <= TOTAL_SECONDS
   shop.check_open_closed_status
 
   # make sure the right barbers are on shift
-  # shop.check_shift_change
+  shop.check_shift_change
 
   #see if we can assign any customers to barbers or release them from the queue
   shop.check_waiting_room
@@ -37,3 +37,4 @@ end
 
 ###Open Questions:
 # Not described: what happens when someone tries to come in before the shop opens?
+  #- for now start the simulation 5 minutes before "opening time", and allow customers to leave disappointed

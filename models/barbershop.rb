@@ -40,24 +40,11 @@ class Barbershop
   end
   ######
 
-  # ### State for SHIFTS
-  # state_machine :active_shift, initial: :shift_1 do
-  #   event :change_shifts! do
-  #     FIRST_SHIFT.each do |barber|
-  #       if barber.available?
-
-  #       end
-  #     end
-  #     transition shift_1: :shift_2
-  #   end
-  # end
-
-  ######
   def initialize(shop_name, current_time = 0, waiting_room = WaitingRoom.new())
     @shop_name = shop_name
     @current_time = current_time
-    @waiting_room = waiting_room # array of Persons
-    @active_barbers = FIRST_SHIFT  # array of Persons
+    @waiting_room = waiting_room
+    @active_barbers = []
     @customer_count = 1
     super()
   end
@@ -80,11 +67,25 @@ class Barbershop
     self.should_close?
   end
 
-  #TODO when a barber first comes online log that they closed in
+  # if no shift if active, clock in 1st shift
+  # if the shift change time has elapsed, iterate through list and as they become free, swap them for second shift
   def check_shift_change
-    if @current_time >= SHIFT_CHANGE
-      self.change_shifts!
+    if @current_time >= OPENING_TIME && @current_time < SHIFT_CHANGE && self.active_barbers.empty?
+      FIRST_SHIFT.each do |barber|
+        barber.shop = self
+        barber.clock_in!
+      end
+      self.active_barbers = FIRST_SHIFT
+
+    # after the switchover time
+    # clock people out as people become available
+    elsif @current_time >= SHIFT_CHANGE
+      available_barbers_from_first_shift.each do |b|
+        b.clock_out!
+        self.active_barbers = [self.active_barbers - [b]].flatten
+      end
     end
+
   end
 
   #if there are available barbers and customers waiting, fetch a new customer
@@ -110,7 +111,7 @@ class Barbershop
     waiting_room.customers.each do |c|
       if (@current_time - c.seated_at) >= MAX_WAITING_ROOM_DURATION
         c.leave_frustrated!
-        waiting_room.pop(customer)
+        waiting_room.pop(c)
       end
     end
   end
@@ -153,6 +154,10 @@ class Barbershop
 
   def current_time=(new_time)
     @current_time = new_time
+  end
+
+  def available_barbers_from_first_shift
+    [@active_barbers & FIRST_SHIFT].flatten.select{|b| b.available? }
   end
 
   # if we have room maybe
