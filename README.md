@@ -4,16 +4,16 @@ A simulation of barbershop traffic
 ## Initial Setup
 
 ### Install dependencies
-> These install instructions assume youre running this program on a mac
+> These install instructions assume you're running this program on a mac.
 
 1. Install **RVM** ([Link](https://rvm.io/rvm/install)) (Or use your favorite ruby version manager)
     - `\curl -sSL https://get.rvm.io | bash`
 
 2. Install **Ruby** ([Link](http://railsapps.github.io/installrubyonrails-mac.html))
-      - `rvm install ruby-2.7.4` (or whatever version number is)
+      - `rvm install ruby-2.7.4` (or similarly modern version of ruby)
     - Set your system to use the same version of Ruby as the app (the OS may already have an older or newer version installed):
       - `rvm --default use 2.7.4`
-    - Run `rvm list` to confirm that the current and default Ruby version is set to the app's version.
+    - Run `rvm list` to confirm that the current and default Ruby version is set to the target version.
 
 3. Install **Bundler** ([Link](https://bundler.io/doc/troubleshooting.html))
   - `gem install bundler`
